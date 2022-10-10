@@ -7,6 +7,76 @@
   font-family: 'KoHo', sans-serif;
 }
 
+
+
+/* HEADER */
+
+/* NAV */
+header{
+  display: flex;
+  justify-content: center;
+}
+.nav {
+  width: 92%;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  background-color: #044B90;
+  padding: 1rem 4rem;
+  margin-top: 20px;
+  border-radius:14px;
+}
+
+.nav .logo {
+  width: auto;
+  height: 40px;
+}
+
+.nav .logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nav .list {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: aliceblue;
+  list-style: none;
+  padding: 1rem 0;
+}
+.nav .list:nth-child(3) {
+  width: 50px;
+  padding: 12px 0;
+  border-radius: 50px;
+}
+.nav .list:nth-child(3) a{
+  text-decoration: none;
+  color: #044B90;
+}
+.nav .list a {
+  text-decoration: none;
+}
+
+.nav .list a li {
+  margin: 0 20px;
+  color: #044B90;
+  font-weight: 600;
+}
+
+/* NAV-END */
+
+
+/* HEADER-END */
+
+
+
+
+
+/* POKEMONS */
 .wrapper {
   display: flex;
   align-items: center;
@@ -77,4 +147,223 @@
 
 .card_footer .moreBtn:hover {
   opacity: 0.8;
+}
+
+/* MORE */
+.more_container {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+  margin-top: 70px;
+  gap: 15px;
+}
+
+.stats_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.more_title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #365FAC;
+  color: #FFCC01;
+  text-shadow: -2px 2px 1px #0E35CF;
+  border-radius: 6px;
+}
+
+.single_main {
+  width: 500px;
+  height: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #365FAC;
+  border-radius: 12px;
+  padding: 1rem;
+
+}
+
+.single {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  background-color: #86baddab;
+  border-radius: 12px;
+}
+
+.single img {
+  width: 90%;
+  height: 90%;
+  margin-top: 20px;
+}
+
+.stats_block {
+  width: 450px;
+  height: 275px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #365FAC;
+  border-radius: 12px;
+  color: white;
+}
+
+.more_list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.more_list li {
+  font-size: 20px;
+  margin: 10px 0;
+  color: gold;
+}
+
+.more_btn {
+  width: 40%;
+  height: 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.stats_block2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 360px;
+  width: 450px;
+  background-color: #365FAC;
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.stats_inline {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: #061A40;
+  padding: 5px 0;
+  border-radius: 12px;
+  gap: 20px;
+}
+
+.stats {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.progress {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 50px;
+  background-color: aliceblue;
+  border-radius: 4px;
+  padding: 5px 0;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.progress {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 50px;
+  background-color: #fa5d5d;
+  border-radius: 4px;
+  padding: 5px 0;
+  color: aliceblue;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.stats:nth-child(2) .progress {
+  background-color: #0CD563;
+}
+
+.stats:nth-child(3) .progress {
+  background-color: #3BD48B;
+}
+
+.stats:nth-child(4) .progress {
+  background-color: #044B90;
+}
+
+.stats:nth-child(5) .progress {
+  background-color: #0E35CF;
+}
+
+.stats:nth-child(6) .progress {
+  background-color: #FFDD3C;
+}
+
+.stats h2 {
+  color: #fa5d5d;
+}
+
+.stats:nth-child(2) h2 {
+  color: #0CD563;
+}
+
+.stats:nth-child(3) h2 {
+  color: #3BD48B;
+}
+
+.stats:nth-child(4) h2 {
+  color: #044B90;
+}
+
+.stats:nth-child(5) h2 {
+  color: #0E35CF;
+}
+
+.stats:nth-child(6) h2 {
+  color: #FFDD3C;
+}
+
+.back {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.backBtn {
+  width: 200px;
+  height: 50px;
+  background-color: #365FAC;
+  color: #FFCC01;
+  text-shadow: -2px 2px 1px #0E35CF;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.grass {
+  color: green;
 }
