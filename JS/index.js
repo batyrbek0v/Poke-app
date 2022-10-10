@@ -42,6 +42,7 @@ const cardTemplate = (pokemons) => {
       </div>
       <div class="card_footer">
         <button class="moreBtn" onclick="getSinglePokemon('${url}')">Go to pokedex</button>
+        <button class="moreBtn" onclick="getSinglePokemon('${url}')"><i class="fa fa-bookmark"></i></button>
       </div>
     </div>
   `).join('')
@@ -68,7 +69,12 @@ const getSinglePokemon = (url) => {
 						<li>Height: <span>${(cb.height / 10)} meter</span></li>
 						<li>Ability: <span>${cb.abilities[0].ability.name}</span></li>
 						<li>Base experience: ${cb.base_experience}</li>
-						<li class="${cb.types[0].type.name}">Type: ${cb.types[0].type.name}</li>
+						<li>
+								Type:
+									<span class="${cb.types[0].type.name}">
+										${cb.types[0].type.name}
+									</span>
+						</li>
 					</ul>
 				</div>
 				<div class="stats_block2">

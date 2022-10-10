@@ -12,19 +12,20 @@
 /* HEADER */
 
 /* NAV */
-header{
+header {
   display: flex;
   justify-content: center;
 }
+
 .nav {
   width: 92%;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   background-color: #044B90;
   padding: 1rem 4rem;
   margin-top: 20px;
-  border-radius:14px;
+  border-radius: 14px;
 }
 
 .nav .logo {
@@ -47,16 +48,21 @@ header{
   background-color: aliceblue;
   list-style: none;
   padding: 1rem 0;
+  margin-right: 20px;
 }
+
 .nav .list:nth-child(3) {
   width: 50px;
   padding: 12px 0;
   border-radius: 50px;
+  margin-left: 20px;
 }
-.nav .list:nth-child(3) a{
+
+.nav .list:nth-child(3) a {
   text-decoration: none;
   color: #044B90;
 }
+
 .nav .list a {
   text-decoration: none;
 }
@@ -67,6 +73,12 @@ header{
   font-weight: 600;
 }
 
+.nav .burger-menu {
+  font-size: 24px;
+  color: white;
+  display: none;
+}
+
 /* NAV-END */
 
 
@@ -74,7 +86,7 @@ header{
 
 
 
-
+/* MAIN */
 
 /* POKEMONS */
 .wrapper {
@@ -82,8 +94,19 @@ header{
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 2rem;
+  padding: 1rem 2rem;
   gap: 20px;
+}
+
+.wrapper-title {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto 0 auto;
+  padding: 0.25rem;
+  background-color: #044B90;
+  color: #FFCC01;
+  border-radius: 8px;
 }
 
 .wrapper .card {
@@ -127,12 +150,14 @@ header{
 
 .card .card_footer {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: 90%;
+  gap: 5px;
 }
 
 .card_footer .moreBtn {
-  width: 100%;
+  width: 80%;
   height: 45px;
   border-radius: 4px;
   background-color: aliceblue;
@@ -148,6 +173,13 @@ header{
 .card_footer .moreBtn:hover {
   opacity: 0.8;
 }
+
+.card_footer .moreBtn:last-child {
+  width: 20%;
+  border: none;
+}
+
+/* POKEMONS-END */
 
 /* MORE */
 .more_container {
@@ -230,6 +262,7 @@ header{
 .more_list li {
   font-size: 20px;
   margin: 10px 0;
+  font-weight: 500;
   color: gold;
 }
 
@@ -362,8 +395,183 @@ header{
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
+  transition: .1s;
 }
 
-.grass {
-  color: green;
+.backBtn:hover {
+  opacity: 0.8;
+}
+
+.more_list li span {
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.more_list li .grass {
+  color: white;
+  background-color: #0CD563;
+}
+
+.more_list li .fire {
+  color: white;
+  background-color: #fa5d5d;
+}
+
+.more_list li .water {
+  color: white;
+  background-color: #0E35CF;
+}
+
+.more_list li .bug {
+  color: white;
+  background-color: darkolivegreen;
+}
+
+.more_list li .dark {
+  color: white;
+  background-color: darkorchid;
+}
+
+.more_list li .electric {
+  color: white;
+  background-color: #FFCC01;
+}
+
+.more_list li .ice {
+  color: white;
+  background-color: #88E5F7;
+}
+
+.more_list li .dragon {
+  color: white;
+  background-color: #861D19;
+}
+
+.more_list li .fairy {
+  color: white;
+  background-color: #DE6294;
+}
+
+.more_list li .fighting {
+  color: white;
+  background-color: #9E534A;
+}
+
+.more_list li .flying {
+  color: white;
+  background-color: #9CB6E5;
+}
+
+.more_list li .ground {
+  color: white;
+  background-color: #C14F36;
+}
+
+.more_list li .normal {
+  color: white;
+  background-color: #B8A7AD;
+}
+
+.more_list li .poison {
+  color: white;
+  background-color: #B415E5;
+}
+
+.more_list li .psychic {
+  background-color: hotpink;
+}
+
+.more_list li .rock {
+  background-color: #9F8953;
+}
+
+.more_list li .steel {
+  color: white;
+  background-color: #888888;
+}
+
+/* MORE-END */
+
+/* MAIN-END */
+
+
+
+/* MEDIA-QUERY */
+
+
+@media (max-width:670px) {
+  .nav .list {
+    display: none;
+  }
+
+  .nav .burger-menu {
+    display: block;
+  }
+
+  .more_container {
+    margin: 20px 0;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width:426px) {
+  .nav {
+    padding: 1rem 1rem;
+  }
+
+  .wrapper {
+    padding: 1rem;
+  }
+
+  .wrapper .card {
+    height: 250px;
+  }
+
+  .stats_inline {
+    gap: 5px;
+  }
+
+  .single_main {
+    width: 400px;
+    height: 500px;
+  }
+
+  .stats_container {
+    width: 100%;
+    align-items: center;
+  }
+
+  .stats_block {
+    width: 98%;
+  }
+
+  .stats_block2 {
+    width: 100%;
+  }
+
+  .stats_inline {
+    gap: 10px;
+    padding: 5px 5px;
+  }
+
+  .stats {
+    width: 100%;
+  }
+
+  .stats .progress {
+    width: 100%;
+  }
+}
+
+
+@media (max-width:321px) {
+  .progress {
+    width: 35px;
+    font-size: 14px;
+  }
+
+  .stats h2 {
+    font-size: 19px;
+  }
 }
