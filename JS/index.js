@@ -34,7 +34,9 @@ let currentPage = 1
 let selectPage = 1
 
 window.addEventListener('load', () => {
+
 	$loader.innerHTML = `<div class="lds-circle"><div></div></div>`
+
 	getPokemons
 		(
 			`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
@@ -45,6 +47,9 @@ window.addEventListener('load', () => {
 	$currentPage.innerHTML = currentPage
 	$prevBtn.setAttribute('disabled', true)
 
+	if (!localStorage.getItem('pokemons')) {
+		localStorage.setItem('pokemons', JSON.stringify([]))
+	}
 })
 
 
@@ -168,26 +173,30 @@ const getSinglePokemon = (url) => {
 // =========
 
 
-// const addToFavorite = (pokemons) => {
+const addToFavorite = (url) => {
 
-// 	const base = pokemons
+	getPokemons(url, '', pokemon => {
 
-// 	const data = base.map((item, i) => item.name)
+		const base = JSON.parse(localStorage.getItem('pokemons'))
 
-// 	console.log(data);
 
-// 	localStorage.setItem('pokemons', JSON.stringify(
-// 		[
-// 			...data,
-// 			{
-// 				name: data
-// 			}
-// 		]
-// 	))
-// 	const parse = JSON.parse(localStorage.getItem('pokemons'))
-// 	console.log(parse);
+		localStorage.setItem('pokemons', JSON.stringify(
+			[
+				...base,
+				{
+					id: pokemon.id,
+					name: pokemon.name,
+					img: pokemon.sprites.other.dream_world.front_default,
+					url: url,
+				}
+			]
+		))
+		alert(`${pokemon.name} добавлен в избранное`)
+	})
 
-// }
+}
+
+
 
 // PAGINATION FUNCTION
 $nextBtn.addEventListener('click', e => {
@@ -239,6 +248,7 @@ $select.addEventListener('change', e => {
 // POKEMON SEARCH FUNCTION  
 $searchInput.addEventListener('input', e => {
 
+
 	selectPage = e.target.value.toLowerCase().trim()
 
 	const selectedValue = $select.value
@@ -249,9 +259,11 @@ $searchInput.addEventListener('input', e => {
 			const pokeFilter = cb.results.filter(item => item.name.toLowerCase().includes(selectPage))
 
 			cardTemplate(pokeFilter)
+			console.log(cb);
 		})
 
 })
+
 
 // PAGE SEARCH FUNCTION  
 $searchBtn.addEventListener('click', e => {

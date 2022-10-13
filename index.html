@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="https://www.freeiconspng.com/thumbs/pokeball-png/file-pokeball-png-0.png">
-  <link rel="stylesheet" href="/CSS/style.css">
   <script src="https://kit.fontawesome.com/f318975fa9.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/IMG/logo.png">
+  <link rel="stylesheet" href="/CSS/style.css">
   <title>PokemonApp</title>
 </head>
 
@@ -15,22 +15,24 @@
   <header>
     <nav class="nav">
       <div class="logo">
-        <img src="/IMG/pokemon.png" alt="pokemon-logo">
+        <a href="/index.html">
+          <img src="/IMG/pokemon.png" alt="pokemon-logo">
+        </a>
       </div>
       <ul class="list">
-        <li>
+        <li class="active">
           <a href="/index.html">
             Home
           </a>
         </li>
         <li>
-          <a href="/index.html">
-            About
+          <a href="/saved.html">
+            Saved
           </a>
         </li>
         <li>
           <a href="/index.html">
-            Saved
+            About
           </a>
         </li>
         <li>
@@ -78,7 +80,7 @@
           <button class="sort-btn sort-btnA" title="Sorting A-z">
             <i class="fas fa-sort-alpha-up"></i>
           </button>
-          <button class="sort-btn sort-btnR" title="Sorting A-z">
+          <button class="sort-btn sort-btnR" title="Randomizer">
             <i class="fa-solid fa-shuffle"></i>
           </button>
           <!-- <select class="sort-select" >
