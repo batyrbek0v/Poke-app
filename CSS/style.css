@@ -7,7 +7,9 @@
   font-family: 'KoHo', sans-serif;
 }
 
-
+body {
+  background-color: aliceblue;
+}
 
 /* HEADER */
 
@@ -92,34 +94,104 @@ header {
 /* POKEMONS */
 
 .poke-form {
-  width: 30%;
-  margin: 1rem auto;
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 35%;
   padding: 1rem 0;
+  gap: 4px;
 }
 
-.poke-form .searchInput {
-  width: 70%;
+.poke-form .poke-form-block {
+  width: 50%;
+  display: flex;
+  gap: 4px;
+}
+
+.poke-form-block .searchInput {
+  width: 60%;
   padding: 14px 16px;
   font-size: 16px;
   font-weight: 600;
   color: #333;
   border: 1px solid #ccc;
   border-radius: 4px;
-  outline-color: #9d9d9d;
+  outline-color: #fae681;
 }
 
-.poke-form .searchInput::placeholder {
+.poke-form-block .searchInput::placeholder {
   font-size: 14px;
 }
 
-.poke-form .select {
-  width: 29%;
+.poke-form-block .select {
+  width: 30%;
   padding: 13.5px 8px;
   border: 1px solid #ccc;
   outline: none;
   border-radius: 4px;
   font-weight: 600;
 }
+
+.poke-form .select option {
+  font-weight: 600;
+  text-transform: capitalize;
+  border: 0;
+}
+
+.poke-form .searchBtn {
+  width: 10%;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.poke-form .searchBtn:hover {
+  opacity: 0.9;
+  color: #061A40;
+  background-color: #fae681;
+}
+
+.poke-form .sort-btns {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  gap: 4px;
+  border-left: 1px solid #ccc;
+}
+
+.poke-form .sort-btns .sort-btnA,
+.sort-btnZ,
+.sort-btnR,
+.sort-btn1-9 {
+  width: 30%;
+  height: 100%;
+  padding: 4px 16px;
+  font-size: 18px;
+  color: #0353A4;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: .2s;
+  cursor: pointer;
+}
+
+.sort-btnA {
+  background-color: #0353A4;
+  color: #fae681;
+  border: 0;
+}
+
+.poke-form .sort-btns .sort-btn:hover {
+  background-color: #fae681;
+}
+
+/* MAIN */
 
 .wrapper {
   display: flex;
@@ -202,6 +274,10 @@ header {
   outline: none;
 }
 
+.fa-star {
+  color: gold;
+}
+
 .card_footer .moreBtn:hover {
   opacity: 0.8;
 }
@@ -234,20 +310,74 @@ header {
   cursor: pointer;
   transition: .3s;
 }
+
 .next:disabled,
-.prev:disabled{
+.prev:disabled {
   opacity: 0.5;
   pointer-events: none;
 }
-.next:hover, .prev:hover{
+
+.next:hover,
+.prev:hover {
   opacity: 0.8;
 }
 
-.pages span{
+.pages span {
   font-size: 18px;
 }
 
 /* POKEMONS-END */
+
+/* ERROR */
+.er div h1 {
+  color: red;
+  font-size: 38px;
+  margin: 4px 0;
+}
+
+/* LOADER */
+
+.loader {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.lds-circle {
+  display: inline-block;
+  transform: translateZ(1px);
+}
+
+.lds-circle>div {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  background: #0353A4;
+  animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+@keyframes lds-circle {
+
+  0%,
+  100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+
+  100% {
+    transform: rotateY(3600deg);
+  }
+}
 
 /* ============================================================ */
 /* ============================================================ */
@@ -473,6 +603,7 @@ header {
 .backBtn:hover {
   opacity: 0.8;
 }
+
 .more_list li span {
   font-weight: bold;
   padding: 6px 12px;
@@ -487,7 +618,7 @@ header {
 
 .more_list li .fire {
   color: white;
-  background-color: #fa5d5d;
+  background-color: #e73820;
 }
 
 .more_list li .water {

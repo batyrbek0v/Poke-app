@@ -5,10 +5,18 @@ const $container = document.querySelector('.container')
 const $wrapper = document.querySelector('.wrapper')
 const $searchInput = document.querySelector('.searchInput')
 const $select = document.querySelector('.select')
+const $selectPage = document.querySelector('.poke-form')
 const $currentPage = document.querySelector('.currentPage')
 const $allPages = document.querySelector('.allPages')
 const $nextBtn = document.querySelector('.next')
 const $prevBtn = document.querySelector('.prev')
+const $sortBtnA = document.querySelector('.sort-btnA')
+const $sortBtnZ = document.querySelector('.sort-btnZ')
+const $sortBtnR = document.querySelector('.sort-btnR')
+const $sortBtnNum = document.querySelector('.sort-btn1-9')
+const $searchBtn = document.querySelector('.searchBtn')
+const $loader = document.querySelector('.loader')
+const $er = document.querySelector('.er')
 
 // ==================================================
 
@@ -18,48 +26,53 @@ const POKE_BASE = 'https://pokeapi.co/api/v2/'
 // DATABASE ---------------------------------
 
 const limitOfPokemons = 12
-const allPokemons = 1154
-const AllPages = Math.floor(allPokemons / limitOfPokemons)
+const allPokemons = 1150
+const allPages = Math.floor(allPokemons / limitOfPokemons)
 
 let offsetCounter = 0
 let currentPage = 1
+let selectPage = 1
 
 window.addEventListener('load', () => {
+	$loader.innerHTML = `<div class="lds-circle"><div></div></div>`
 	getPokemons
 		(
 			`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
 				cardTemplate(cb.results)
 			}
 		)
-	$allPages.innerHTML = AllPages
+	$allPages.innerHTML = allPages
 	$currentPage.innerHTML = currentPage
 	$prevBtn.setAttribute('disabled', true)
+
 })
 
-// window.addEventListener('error', () => {
-// 	$wrapper.innerHTML = `
-// 		<div class="error-block">
-// 			<div class="error-title">
-// 				<h2>Network or technical issues</h2>
-// 			</div>
-// 			<img src="/IMG/pokemon.png" alt="error-image">
-// 		</div>
-// 	`
-// })
 
 // MINI ARROW FUNCTIONS 
-const goBack = () => window.location.reload()
+const goBack = () => location.reload()
+const changePage = () => $currentPage.innerHTML = currentPage
 const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 // -------------------------------------------------------------------------------
 
+// FETCHING API
 const getPokemons = (url, query, callback) => {
 	fetch(`${url}?${query}`)
 		.then(res => res.json())
 		.then(res => callback(res))
+		.catch(error => {
+			$loader.style.display = 'none'
+			$er.innerHTML = `
+			<div>
+				<h1>Error 404 !</h1>
+				<h2>${error}</h2>
+			</div>`
+		})
 }
+// =============
 
+// CARD-TEMPLATE
 const cardTemplate = (pokemons) => {
-	const template = pokemons.map(({ name, url }) => `
+	const template = pokemons.map(({ name, url }, i) => `
 	<div class="card">
       <div class="card_title">
         <h2>${name}</h2>
@@ -68,18 +81,21 @@ const cardTemplate = (pokemons) => {
         <img src="/IMG/pokemon.png" alt=${name} />
       </div>
       <div class="card_footer">
-        <button class="moreBtn" onclick="getSinglePokemon('${url}')">Go to pokedex</button>
         <button class="moreBtn" onclick="getSinglePokemon('${url}')">
+					Go to pokedex
+				</button>
+        <button class="moreBtn" onclick="addToFavorite('${url}')">
 					<i class="far fa-star"></i>
 				</button>
       </div>
     </div>
   `).join('')
+
 	$wrapper.innerHTML = template
 }
+// =============
 
-
-
+// MORE INFO 
 const getSinglePokemon = (url) => {
 	getPokemons(url, '', cb => {
 		$container.innerHTML = `
@@ -89,14 +105,17 @@ const getSinglePokemon = (url) => {
 					<div class="more_title">
 						<h1>${cb.name} #${cb.id}</h1>
 					</div>
-					<img src="${cb.sprites.other.dream_world.front_default}" alt="${cb.name}">
+					<img 
+						src="${cb.sprites.other.dream_world.front_default || cb.sprites.other.home.front_default}" 
+						alt="${cb.name}"
+					>
 				</div>
 			</div>
 			<div class="stats_container">
 				<div class="stats_block">
 					<ul class="more_list">
 						<li>Weigth: <span>${(cb.weight / 10)} kg</span></li>
-						<li>Height: <span>${(cb.height / 10)} meter</span></li>
+						<li>Height: <span>${(cb.height / 10)} m </span></li>
 						<li>Ability: <span>${cb.abilities[0].ability.name}</span></li>
 						<li>Base experience: ${cb.base_experience}</li>
 						<li>
@@ -105,11 +124,7 @@ const getSinglePokemon = (url) => {
 										${cb.types[0].type.name}
 									</span>
 									<span class="${cb.types[1]?.type.name ? cb.types[1]?.type.name : ''}">
-										${
-												cb.types[1]?.type.name
-												? cb.types[1]?.type.name
-												: ''
-											}
+										${cb.types[1]?.type.name ? cb.types[1]?.type.name : ''}
 									</span>
 						</li>
 					</ul>
@@ -148,60 +163,177 @@ const getSinglePokemon = (url) => {
 			</div>
 		</div>
 		`
-		console.log(cb);
 	})
 }
+// =========
 
 
+// const addToFavorite = (pokemons) => {
+
+// 	const base = pokemons
+
+// 	const data = base.map((item, i) => item.name)
+
+// 	console.log(data);
+
+// 	localStorage.setItem('pokemons', JSON.stringify(
+// 		[
+// 			...data,
+// 			{
+// 				name: data
+// 			}
+// 		]
+// 	))
+// 	const parse = JSON.parse(localStorage.getItem('pokemons'))
+// 	console.log(parse);
+
+// }
+
+// PAGINATION FUNCTION
 $nextBtn.addEventListener('click', e => {
 	e.preventDefault()
 
 	offsetCounter += limitOfPokemons
 	currentPage++
 
-	currentPage === AllPages && setAttribute('disabled', true)
+	currentPage === allPages && $nextBtn.setAttribute('disabled', true)
 
 	$prevBtn.removeAttribute('disabled')
 
-	getPokemons(`${POKE_BASE}pokemon`,`limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
+	getPokemons(`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
 		cardTemplate(cb.results)
 	})
-	// scrollTop()
+	changePage()
+	scrollTop()
 })
 
-
-$prevBtn.addEventListener('click' , e => {
+$prevBtn.addEventListener('click', e => {
 	e.preventDefault()
 
 	offsetCounter -= limitOfPokemons
-	currentPage --
+	currentPage--
+
+	currentPage === 1 && $prevBtn.setAttribute('disabled', true)
 
 	getPokemons(`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
 		cardTemplate(cb.results)
 	})
 
 	$nextBtn.removeAttribute('disabled')
+	changePage()
+	scrollTop()
+})
+// ===================
+
+$select.addEventListener('change', e => {
+	e.preventDefault()
+
+	const nameValue = e.target.value
+
+	nameValue === 'name'
+		? $searchInput.setAttribute('placeholder', 'Search Pokemons')
+		: $searchInput.setAttribute('placeholder', 'Enter page number')
+
 })
 
-
-
-
-
-
-
-
+// POKEMON SEARCH FUNCTION  
 $searchInput.addEventListener('input', e => {
 
 	selectPage = e.target.value.toLowerCase().trim()
 
 	const selectedValue = $select.value
 
-	if (selectedValue === 'name') {
-		getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}&offset=${offsetCounter}`, cb => {
-			const pokeFilter = cb.filter(item => item.name.toLowerCase().includes(selectPage))
+	selectedValue === 'name'
+		&& getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}&offset=${offsetCounter}`, cb => {
+
+			const pokeFilter = cb.results.filter(item => item.name.toLowerCase().includes(selectPage))
+
 			cardTemplate(pokeFilter)
-			console.log(cb);
 		})
+
+})
+
+// PAGE SEARCH FUNCTION  
+$searchBtn.addEventListener('click', e => {
+	e.preventDefault()
+
+
+	if (selectPage > allPages || selectPage < 1 || selectPage == currentPage) {
+
+		alert('Введите корректное значение')
+
+	} else {
+
+		const selectedOffSet = selectPage * limitOfPokemons - limitOfPokemons
+
+		offsetCounter = selectedOffSet
+
+		$currentPage.innerHTML = selectPage
+		currentPage = selectPage
+
+		selectPage !== allPages
+			? $nextBtn.removeAttribute('disabled')
+			: $nextBtn.setAttribute('disabled', true)
+
+
+		selectPage !== 1
+			? $prevBtn.removeAttribute('disabled')
+			: $prevBtn.setAttribute('disabled', true)
+
+		getPokemons
+			(
+				`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
+					cardTemplate(cb.results)
+				}
+			)
+
+		$searchInput.value = ''
 	}
 })
 
+// SORTING
+$sortBtnZ.addEventListener('click', e => {
+	e.preventDefault()
+
+	getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}$offset=${offsetCounter}`, cb => {
+		const pokeSort = cb.results.sort((a, b) => {
+			if (a['name'] > b['name']) return -1
+		})
+		cardTemplate(pokeSort)
+		console.log(pokeSort);
+	})
+})
+
+$sortBtnA.addEventListener('click', e => {
+	e.preventDefault()
+
+	getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}$offset=${offsetCounter}`, cb => {
+		const pokeSort = cb.results.sort((a, b) => {
+			if (a['name'] < b['name']) return -1
+		})
+		cardTemplate(pokeSort)
+	})
+
+})
+
+$sortBtnR.addEventListener('click', e => {
+	e.preventDefault()
+
+	getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}&offset=${offsetCounter}`, cb => {
+		pokeRandom = cb.results.sort(() => Math.random() - 0.5)
+		cardTemplate(pokeRandom)
+	})
+})
+
+$sortBtnNum.addEventListener('click', e => {
+	e.preventDefault()
+
+	getPokemons(`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}$offset=${offsetCounter}`, cb => {
+		const pokeSort = cb.results.sort((a, b) => {
+			if (a['name'] < b['name']) return 1
+		})
+		cardTemplate(pokeSort)
+		console.log(pokeSort);
+	})
+
+})

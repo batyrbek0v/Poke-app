@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://www.freeiconspng.com/thumbs/pokeball-png/file-pokeball-png-0.png">
   <link rel="stylesheet" href="/CSS/style.css">
-  <script src="https://kit.fontawesome.com/547994bb66.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/f318975fa9.js" crossorigin="anonymous"></script>
   <title>PokemonApp</title>
 </head>
 
@@ -57,14 +57,40 @@
         <h1>All Pokemons</h1>
       </div>
       <form class="poke-form">
-        <input type="text" class="searchInput" placeholder="Search...">
-        <select class="select">
-          <option disabled selected>Select</option>
-          <option value="name">name</option> 
-          <option value="page">page</option>
-        </select>
+        <div class="poke-form-block">
+          <input type="text" class="searchInput" placeholder="Search...">
+          <select class="select">
+            <option disabled selected>Select</option>
+            <option value="name">name</option>
+            <option value="page">page</option>
+          </select>
+          <button class="searchBtn">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div class="sort-btns">
+          <button class="sort-btn sort-btn1-9" title="Sorting 1-9">
+            <i class="fa-solid fa-arrow-down-1-9"></i>
+          </button>
+          <button class="sort-btn sort-btnZ" title="Sorting Z-a">
+            <i class="fas fa-sort-alpha-up-alt"></i>
+          </button>
+          <button class="sort-btn sort-btnA" title="Sorting A-z">
+            <i class="fas fa-sort-alpha-up"></i>
+          </button>
+          <button class="sort-btn sort-btnR" title="Sorting A-z">
+            <i class="fa-solid fa-shuffle"></i>
+          </button>
+          <!-- <select class="sort-select" >
+            <option selected="selected">Sort</option>
+            <option value="A-z">A-z</option>
+            <option value="Z-a">Z-a</option>
+          </select> -->
+        </div>
       </form>
       <div class="wrapper">
+        <div class="loader"></div>
+        <div class="er"></div>
       </div>
       <div class="pagination-btns">
         <button class="prev"><i class="fa fa-angle-double-left"></i></button>
@@ -76,9 +102,9 @@
         <button class="next"><i class="fa fa-angle-double-right"></i></button>
       </div>
     </div>
-
   </main>
-  <footer></footer>
+  <footer>
+  </footer>
   <script src="/JS/index.js"></script>
 </body>
 
