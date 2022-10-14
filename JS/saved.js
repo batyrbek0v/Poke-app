@@ -5,6 +5,7 @@ const $container = document.querySelector('.container')
 const $wrapper = document.querySelector('.wrapper')
 const $loader = document.querySelector('.loader')
 const $totalCount = document.querySelector('.total-count')
+const $removeAllPokemons = document.querySelector('.sort-btnAll')
 
 // ==================================================
 
@@ -16,12 +17,13 @@ window.addEventListener('load', () => {
 
   const total = savedPokemons.length
 
-  $totalCount.innerHTML = `Saved Pokemons: ${total}`
+  total === 0 && $removeAllPokemons.classList.add('removed')
+
+  total !== 0
+    ? $totalCount.innerHTML = `Saved Pokemons: ${total}`
+    : $totalCount.innerHTML = `No saved pokemons !`
 
 })
-
-const goBack = () => location.reload()
-
 
 const cardTemplate = (pokemons) => {
   const template = pokemons.map(({ name, id, img }) => `
@@ -53,5 +55,15 @@ const removeSavedPokemon = (id) => {
   goBack()
 }
 
+$removeAllPokemons.addEventListener('click', e => {
+  e.preventDefault()
+
+  localStorage.setItem('pokemons', JSON.stringify([]))
+
+  goBack()
+
+})
+// MINI ARROW FUNCTION
+const goBack = () => location.reload()
 
 

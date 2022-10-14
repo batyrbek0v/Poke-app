@@ -69,7 +69,7 @@ const getPokemons = (url, query, callback) => {
 			</div>`
 		})
 }
-// =============
+// ================================================
 
 // CARD-TEMPLATE
 const cardTemplate = (pokemons) => {
@@ -94,7 +94,7 @@ const cardTemplate = (pokemons) => {
 
 	$wrapper.innerHTML = template
 }
-// =============
+// =====================================
 
 // MORE INFO 
 const getSinglePokemon = (url) => {
@@ -166,9 +166,9 @@ const getSinglePokemon = (url) => {
 		`
 	})
 }
-// =========
+// ===================================
 
-
+// ADDING TO FAVORITES
 const addToFavorite = (url) => {
 
 	getPokemons(url, '', pokemon => {
@@ -177,10 +177,8 @@ const addToFavorite = (url) => {
 
 		const saved = base.find(item => item.id === pokemon.id)
 
-		console.log(saved)
-
 		if (saved) {
-			alert('Вы уже добавляли этого покемона')
+			alert('ВЫ УЖЕ ДОБАВЛЯЛИ ЭТОГО ПОКЕМОНА')
 		} else {
 			localStorage.setItem('pokemons', JSON.stringify(
 				[
@@ -193,14 +191,17 @@ const addToFavorite = (url) => {
 					}
 				]
 			))
+			alert(`${pokemon.name} добавлен в избранное`)
 		}
+
 	})
 
 }
-
+// ================================
 
 // PAGINATION FUNCTION
 $nextBtn.addEventListener('click', e => {
+
 	e.preventDefault()
 
 	offsetCounter += limitOfPokemons
@@ -208,16 +209,22 @@ $nextBtn.addEventListener('click', e => {
 
 	currentPage === allPages && $nextBtn.setAttribute('disabled', true)
 
+	getPokemons
+		(
+			`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
+				cardTemplate(cb.results)
+			}
+		)
+
 	$prevBtn.removeAttribute('disabled')
 
-	getPokemons(`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
-		cardTemplate(cb.results)
-	})
 	changePage()
 	scrollTop()
+
 })
 
 $prevBtn.addEventListener('click', e => {
+
 	e.preventDefault()
 
 	offsetCounter -= limitOfPokemons
@@ -225,26 +232,33 @@ $prevBtn.addEventListener('click', e => {
 
 	currentPage === 1 && $prevBtn.setAttribute('disabled', true)
 
-	getPokemons(`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
-		cardTemplate(cb.results)
-	})
+	getPokemons
+		(
+			`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
+				cardTemplate(cb.results)
+			}
+		)
 
 	$nextBtn.removeAttribute('disabled')
+
 	changePage()
 	scrollTop()
-})
-// ===================
 
+})
+// ==========================================
+// FOR PLACEHOLDER IN INPUT
 $select.addEventListener('change', e => {
+
 	e.preventDefault()
 
-	const nameValue = e.target.value
+	const selectValue = e.target.value
 
-	nameValue === 'name'
+	selectValue === 'name'
 		? $searchInput.setAttribute('placeholder', 'Search Pokemons')
 		: $searchInput.setAttribute('placeholder', 'Enter page number')
 
 })
+// ==========================================
 
 // POKEMON SEARCH FUNCTION  
 $searchInput.addEventListener('input', e => {
@@ -270,12 +284,12 @@ $searchInput.addEventListener('input', e => {
 		})
 
 })
-
+// =============================================
 
 // PAGE SEARCH FUNCTION  
 $searchBtn.addEventListener('click', e => {
-	e.preventDefault()
 
+	e.preventDefault()
 
 	if (selectPage > allPages || selectPage < 1 || selectPage == currentPage) {
 
@@ -309,51 +323,61 @@ $searchBtn.addEventListener('click', e => {
 		$searchInput.value = ''
 	}
 })
+// =============================================
 
-// SORTING
+// SORTING BUTTONS
 $sortBtnZ.addEventListener('click', e => {
+
 	e.preventDefault()
 
 	getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}$offset=${offsetCounter}`, cb => {
-		const pokeSort = cb.results.sort((a, b) => {
-			if (a['name'] > b['name']) return -1
-		})
+
+		const pokeSort = cb.results.sort((a, b) => a['name'] > b['name'] && -1)
+
 		cardTemplate(pokeSort)
 	})
+
 })
 
 $sortBtnA.addEventListener('click', e => {
 	e.preventDefault()
 
 	getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}$offset=${offsetCounter}`, cb => {
-		const pokeSort = cb.results.sort((a, b) => {
-			if (a['name'] < b['name']) return -1
-		})
+
+		const pokeSort = cb.results.sort((a, b) => a['name'] < b['name'] && -1)
+
 		cardTemplate(pokeSort)
 	})
 
 })
 
 $sortBtnR.addEventListener('click', e => {
+
 	e.preventDefault()
 
 	getPokemons(`${POKE_BASE}pokemon`, `limit=${allPokemons}&offset=${offsetCounter}`, cb => {
+
 		pokeRandom = cb.results.sort(() => Math.random() - 0.5)
+
 		cardTemplate(pokeRandom)
 	})
+
 })
 
 $sortBtnNum.addEventListener('click', e => {
+
 	e.preventDefault()
 
 	getPokemons(`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}$offset=${offsetCounter}`, cb => {
-		const pokeSort = cb.results.sort((a, b) => {
-			if (a['name'] < b['name']) return 1
-		})
+
+		const pokeSort = cb.results.sort((a, b) => a['name'] < b['name'] && 1)
+		
 		cardTemplate(pokeSort)
 	})
 
 })
+// =============================================
+
 
 // MINI ARROW FUNCTIONS 
 const goBack = () => location.reload()
