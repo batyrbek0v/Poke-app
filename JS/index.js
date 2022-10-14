@@ -180,7 +180,7 @@ const addToFavorite = (url) => {
 		console.log(saved)
 
 		if (saved) {
-			alert('Вы уже добавлили')
+			alert('Вы уже добавляли этого покемона')
 		} else {
 			localStorage.setItem('pokemons', JSON.stringify(
 				[

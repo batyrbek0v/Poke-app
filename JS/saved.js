@@ -4,15 +4,19 @@
 const $container = document.querySelector('.container')
 const $wrapper = document.querySelector('.wrapper')
 const $loader = document.querySelector('.loader')
+const $totalCount = document.querySelector('.total-count')
 
 // ==================================================
 
 window.addEventListener('load', () => {
 
-
   const savedPokemons = JSON.parse(localStorage.getItem('pokemons'))
 
   cardTemplate(savedPokemons)
+
+  const total = savedPokemons.length
+
+  $totalCount.innerHTML = `Saved Pokemons: ${total}`
 
 })
 
