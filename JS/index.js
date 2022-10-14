@@ -53,11 +53,7 @@ window.addEventListener('load', () => {
 })
 
 
-// MINI ARROW FUNCTIONS 
-const goBack = () => location.reload()
-const changePage = () => $currentPage.innerHTML = currentPage
-const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-// -------------------------------------------------------------------------------
+
 
 // FETCHING API
 const getPokemons = (url, query, callback) => {
@@ -77,7 +73,7 @@ const getPokemons = (url, query, callback) => {
 
 // CARD-TEMPLATE
 const cardTemplate = (pokemons) => {
-	const template = pokemons.map(({ name, url }, i) => `
+	const template = pokemons.map(({ name, url }) => `
 	<div class="card">
       <div class="card_title">
         <h2>${name}</h2>
@@ -179,23 +175,28 @@ const addToFavorite = (url) => {
 
 		const base = JSON.parse(localStorage.getItem('pokemons'))
 
+		const saved = base.find(item => item.id === pokemon.id)
 
-		localStorage.setItem('pokemons', JSON.stringify(
-			[
-				...base,
-				{
-					id: pokemon.id,
-					name: pokemon.name,
-					img: pokemon.sprites.other.dream_world.front_default,
-					url: url,
-				}
-			]
-		))
-		alert(`${pokemon.name} добавлен в избранное`)
+		console.log(saved)
+
+		if (saved) {
+			alert('Вы уже добавлили')
+		} else {
+			localStorage.setItem('pokemons', JSON.stringify(
+				[
+					...base,
+					{
+						id: pokemon.id,
+						name: pokemon.name,
+						img: pokemon.sprites.other.dream_world.front_default,
+						url: url,
+					}
+				]
+			))
+		}
 	})
 
 }
-
 
 
 // PAGINATION FUNCTION
@@ -248,7 +249,6 @@ $select.addEventListener('change', e => {
 // POKEMON SEARCH FUNCTION  
 $searchInput.addEventListener('input', e => {
 
-
 	selectPage = e.target.value.toLowerCase().trim()
 
 	const selectedValue = $select.value
@@ -259,7 +259,14 @@ $searchInput.addEventListener('input', e => {
 			const pokeFilter = cb.results.filter(item => item.name.toLowerCase().includes(selectPage))
 
 			cardTemplate(pokeFilter)
-			console.log(cb);
+		})
+
+	selectPage.length == 0 &&
+		getPokemons(`${POKE_BASE}pokemon`, `limit=${limitOfPokemons}&offset=${offsetCounter}`, cb => {
+
+			const initialPokemons = cb.results
+
+			cardTemplate(initialPokemons)
 		})
 
 })
@@ -312,7 +319,6 @@ $sortBtnZ.addEventListener('click', e => {
 			if (a['name'] > b['name']) return -1
 		})
 		cardTemplate(pokeSort)
-		console.log(pokeSort);
 	})
 })
 
@@ -345,7 +351,12 @@ $sortBtnNum.addEventListener('click', e => {
 			if (a['name'] < b['name']) return 1
 		})
 		cardTemplate(pokeSort)
-		console.log(pokeSort);
 	})
 
 })
+
+// MINI ARROW FUNCTIONS 
+const goBack = () => location.reload()
+const changePage = () => $currentPage.innerHTML = currentPage
+const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+// -------------------------------------------------------------------------------
